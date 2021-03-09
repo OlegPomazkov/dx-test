@@ -5,11 +5,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+  	charts: [
+  		{name: 'line'},
+  		{name: 'pie'}
+  	]
+  },
+  getters: {
+  	currCharts: state => state.charts.map(item => ({...item}))
   },
   mutations: {
+  	SET_CHART(state, dataObj) {
+  		state.charts.push(dataObj)
+  	}
   },
   actions: {
-  },
-  modules: {
+  	setChart({commit}, dataObj) {
+  		commit('SET_CHART', dataObj)
+  	}
   }
 })
