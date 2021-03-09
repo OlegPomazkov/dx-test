@@ -5,51 +5,34 @@
       @nav-action="handleNavAction"
     />
 
-    <view-area class="main-page__view"/>
-
-    <el-dialog
-      title="Tips"
-      :visible="dialogVisible"
-      :show-close="false"
-      width="30%"
-    >
-      <span>This is a message</span>
+    <div class="main-page__view">
+      <view-area />
+    </div>
       
-      <span slot="footer" class="dialog-footer">
-        <el-button
-          size="mini"
-          @click="handleCloseDialog"
-        >
-          Cancel
-        </el-button>
-
-        <el-button 
-          size="mini"
-          type="primary" 
-          @click="handleGetData"
-        >
-          Confirm
-        </el-button>
-      </span>
-    </el-dialog>
+    <chart-dialog
+      :is-visible="dialogVisible"
+      @close-dialog="handleCloseDialog"
+    />
   </div>
 </template>
 
 <script>
 import FancyHeader from './FancyHeader'
 import ViewArea from './ViewArea'
+import ChartDialog from './ChartDialog'
 
 export default {
   name: 'MainPage',
 
   components: {
     FancyHeader,
-    ViewArea
+    ViewArea,
+    ChartDialog,
   },
 
   data() {
     return {
-      dialogVisible: false
+      dialogVisible: false,
     }
   },
 
@@ -60,9 +43,6 @@ export default {
     handleCloseDialog() {
       this.dialogVisible = false
     },
-    handleGetData() {
-      this.handleCloseDialog()
-    }
   }
 }
 </script>
@@ -72,15 +52,17 @@ export default {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow: hidden;
 }
 .main-page__view {
   box-sizing: border-box;
   flex: 1;
-  overflow: auto;
+  overflow: hidden;
   background-color: lightgrey;
 }
 </style>

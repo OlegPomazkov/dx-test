@@ -1,7 +1,5 @@
 <template>
   <div class="view-area">
-    View
-
     <component
       v-for="(item, k) in currCharts"
       class="view-area__comp"
@@ -48,4 +46,10 @@ export default {
 </script>
 
 <style>
+.view-area {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
 </style>

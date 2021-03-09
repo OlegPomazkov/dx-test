@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
   	charts: [
+  		{name: 'pie'},
   		{name: 'line'},
   		{name: 'pie'}
   	]
