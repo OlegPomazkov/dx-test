@@ -16,6 +16,7 @@
          size="mini"
          v-model="chart"
          placeholder="Выберите график"
+         @change="handleChartChanged"
       >
         <el-option
           v-for="(option, k) in chartOptions"
@@ -69,15 +70,16 @@
 <script>
 const CHARTS = [
   {label: 'Пирог 1', value: 'pie'},
-  {label: 'Пирог 2', value: 'pie'},
-  {label: 'Пирог 3', value: 'pie'},
-  {label: 'Пирог 4', value: 'pie'},
+  {label: 'Пирог 2', value: 'pie '},
+  {label: 'Линия 1', value: 'line'},
+  {label: 'Линия 2', value: 'line '},
 ]
 const SOURCES = [
-  {label: 'Данные 1', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047'},
-  {label: 'Данные 2', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047'},
-  {label: 'Данные 3', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047'},
-  {label: 'Данные 4', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047'},
+  {label: 'Данные 1', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047', type: 'pie'},
+  {label: 'Данные 2', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047 ', type: 'pie'},
+  {label: 'Данные 3', value: 'https://run.mocky.io/v3/2699115b-8ced-40c3-8072-b7fa9faf6047  ', type: 'pie'},
+  {label: 'Данные 4', value: 'https://run.mocky.io/v3/92a0a266-0321-4ff5-9993-b394d03ceee2', type: 'line'},
+  {label: 'Данные 5', value: 'https://run.mocky.io/v3/92a0a266-0321-4ff5-9993-b394d03ceee2 ', type: 'line'},
 ]
 
 export default {
@@ -96,15 +98,33 @@ export default {
       chart: null,
       source: null,
       chartOptions: CHARTS,
-      sourceOptions: SOURCES,
+    }
+  },
+
+  computed: {
+    sourceOptions() {
+      return SOURCES.filter(i => this.chart? i.type === this.chart.trim(): false)
     }
   },
 
   methods: {
+    handleChartChanged() {
+      this.source = null
+    },
     handleCloseDialog() {
+      this.chart = null
+      this.source = null
       this.$emit('close-dialog')
     },
-    handleGetData() {
+    async handleGetData() {
+      try {
+        await this.$store.dispatch('getChartData', {
+          type: this.chart,
+          url: this.source,
+        })
+      } catch (err) {
+        console.error('Error on get chart data: ', err.message)
+      }
       this.handleCloseDialog()
     }
   }
@@ -112,21 +132,10 @@ export default {
 </script>
 
 <style>
-.main-page {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: hidden;
+.chart-dialog {
+  font-family: sans-serif;
 }
-.main-page__view {
-  box-sizing: border-box;
-  flex: 1;
-  overflow: hidden;
-  background-color: lightgrey;
+.chart-dialog__select-group {
+  margin-top: 10px;
 }
 </style>

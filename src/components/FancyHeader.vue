@@ -25,11 +25,9 @@ export default {
 <style>
 .page-nav {
   box-sizing: border-box;
-  width: 100%;
-  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: salmon;
+  background-color: #f0f0f0;
 }
 </style>

@@ -1,25 +1,25 @@
 <template>
-	<DxPieChart
-		:data-source="areas"
+	<dx-pie-chart
+		:data-source="item.data"
 		palette="Bright"
-		title="Area of Countries"
+		title="Группы по долям"
 	>
-		<DxSeries
-			argument-field="country"
-			value-field="area"
+		<dx-series
+			argument-field="Группа"
+			value-field="Доля"
 		>
 
-		<DxLabel :visible="true">
-			<DxConnector
+		<dx-label :visible="true">
+			<dx-connector
 			  :visible="true"
 			  :width="1"
 			/>
-		</DxLabel>
+		</dx-label>
 		
-		</DxSeries>
+		</dx-series>
 
-		<DxSize :width="500"/>
-	</DxPieChart>
+		<dx-size :width="500"/>
+	</dx-pie-chart>
 </template>
 
 <script>
@@ -29,11 +29,6 @@ import DxPieChart, {
 	DxLabel,
 	DxConnector,
 } from 'devextreme-vue/pie-chart';
-
-const AREAS = [
-	{country: 'aaa', area: 60},
-	{country: 'BBB', area: 40},
-]
 
 export default {
   name: 'ChartPie',
@@ -46,14 +41,13 @@ export default {
     DxConnector,
   },
 
-  data() {
-  	return {
-  		areas: AREAS
+  props: {
+  	item: {
+  		type: Object,
+  		required: true,
+  		default: () => ({}),
   	}
   },
-
-  methods: {
-  }
 }
 </script>
 

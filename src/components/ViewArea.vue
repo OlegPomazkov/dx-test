@@ -3,7 +3,7 @@
     <component
       v-for="(item, k) in currCharts"
       class="view-area__comp"
-      :key="`${k}_${item.nname}`"
+      :key="`${k}_${item.name}`"
       :is="`chart-${item.name}`"
       :item="item"
       @chart-action="handleChartAction"
@@ -51,5 +51,9 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
+}
+.view-area__comp {
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
